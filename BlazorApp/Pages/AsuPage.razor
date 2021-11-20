@@ -1,0 +1,21 @@
+﻿@page "/asu"
+@using Asu
+@inject JSUtils Utils
+
+<PageTitle>Asu</PageTitle>
+
+<h1>Asu</h1>
+
+<button class="btn btn-primary" @onclick="Salute">Salute</button>
+<p role="status">Message: @msg</p>
+<FilePicker Label="Cargar subtítulos:"></FilePicker>
+
+@code {
+    private string msg = "";
+    string fileContent = "";
+
+    private void Salute() {
+        msg = Asu.Parser.Salute();
+        Utils.Alert(msg);
+    }
+}

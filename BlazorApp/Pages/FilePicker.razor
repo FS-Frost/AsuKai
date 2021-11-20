@@ -1,0 +1,25 @@
+﻿<div>
+    @if (@Label != "") {
+        <label>@Label</label>
+    }
+
+    <InputFile OnChange="LoadFile" class=""></InputFile>
+</div>
+
+@code {
+    [Parameter]
+    public string Label { get; set; } = "";
+
+    IBrowserFile? loadedFile;
+
+    private void LoadFile(InputFileChangeEventArgs e) {
+        loadedFile = e.File;
+        Console.WriteLine($"Archivo cargado: {loadedFile.Name} ({loadedFile.Size} bytes)");
+    }
+
+    public async Task<string> GetFileContent(InputFileChangeEventArgs e) {
+        using var reader = new StreamReader(loadedFile.OpenReadStream());
+        var fileContent = await reader.ReadToEndAsync();
+        return fileContent;
+    }
+}
