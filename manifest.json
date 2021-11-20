@@ -1,0 +1,21 @@
+{
+  "name": "Asu",
+  "short_name": "Asu",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#0f47ff",
+  "theme_color": "#03173d",
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    },
+    {
+      "src": "192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ]
+}
