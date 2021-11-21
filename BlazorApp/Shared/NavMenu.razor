@@ -1,8 +1,6 @@
 ﻿@inject JSUtils Utils
 
-<Bar Breakpoint="Breakpoint.Desktop"
-     Background="Background.Light"
-     ThemeContrast="ThemeContrast.Light">
+<Bar Breakpoint="Breakpoint.Desktop" Background="Background.Light" ThemeContrast="ThemeContrast.Light">
     <BarBrand>
         Asu
     </BarBrand>
@@ -22,7 +20,9 @@
                         <BarDropdown>
                             <BarDropdownToggle>Movimiento</BarDropdownToggle>
                             <BarDropdownMenu>
-                                <BarDropdownItem>Copiar movimiento</BarDropdownItem>
+                                <BarDropdownItem>
+                                    <BarLink To="carteles/copiarMovimiento">Copiar movimiento</BarLink>
+                                </BarDropdownItem>
                                 <BarDropdownItem>Secuencia de posiciones</BarDropdownItem>
                             </BarDropdownMenu>
                         </BarDropdown>
@@ -35,6 +35,8 @@
                         </BarDropdown>
                     </BarDropdownMenu>
                 </BarDropdown>
+            </BarItem>
+            <BarItem>
                 <BarDropdown>
                     <BarDropdownToggle>Karaokes</BarDropdownToggle>
                     <BarDropdownMenu>
@@ -61,8 +63,7 @@
         </BarStart>
         <BarEnd>
             <BarItem>
-                <Button Color="Color.Primary"
-                        Clicked="@VisitSyncRajo">
+                <Button Color="Color.Primary" Clicked="@VisitSyncRajo">
                     SyncRajo Fansub
                 </Button>
             </BarItem>
@@ -71,8 +72,9 @@
 </Bar>
 
 @code {
-    private async void VisitSyncRajo() {
+    private async void VisitSyncRajo()
+    {
         var url = "http://www.syncrajo.net";
-        await Utils.OpenNewTab(url);
+        await Utils.OpenNewTabAsync(url);
     }
 }

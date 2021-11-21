@@ -14,8 +14,9 @@
     private string msg = "";
     string fileContent = "";
 
-    private void Salute() {
+    private async Task Salute()
+    {
         msg = Asu.Parser.Salute();
-        Utils.Alert(msg);
+        await Utils.AlertAsync(msg);
     }
 }

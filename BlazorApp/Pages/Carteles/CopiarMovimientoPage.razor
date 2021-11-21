@@ -1,0 +1,227 @@
+﻿@page "/carteles/copiarMovimiento"
+
+@using Asu
+@using Asu.Constants
+@using Asu.Tags
+@using Microsoft.Extensions.Logging
+@using System.Collections.ObjectModel
+
+@inject ILogger<CopiarMovimientoPage> _logger
+@inject JSUtils JSService
+@inject IMessageService MessageService
+
+<PageTitle>Copiar movimiento</PageTitle>
+
+<!--Movimiento base-->
+<Row>
+    <Column ColumnSize="ColumnSize.IsFull">
+        <Field>
+            <FieldBody>
+                <Button Color="Color.Secondary" Clicked="@ShowExample">Mostrar ejemplo</Button>
+            </FieldBody>
+        </Field>
+
+        <Field>
+            <FieldBody>
+                <Addons>
+                    <Addon AddonType="AddonType.Start">
+                        <AddonLabel>Movimiento base</AddonLabel>
+                    </Addon>
+                    <Addon AddonType="AddonType.Body">
+                        <TextEdit Placeholder="\move(640,710,862,710,0,292)" @bind-Text="@baseMove"></TextEdit>
+                    </Addon>
+                </Addons>
+            </FieldBody>
+        </Field>
+
+        <Field>
+            <FieldBody>
+                <Check TValue="bool" @bind-Checked="@usePosAsEndOfMove">Invertir</Check>
+            </FieldBody>
+        </Field>
+
+        <Field>
+            <FieldBody>
+                <Button Color="Color.Primary" Clicked="@LoadInputFromClipboard">Pegar desde portapapeles</Button>
+            </FieldBody>
+        </Field>
+
+        <Field>
+            <FieldBody>
+                <MemoEdit Rows="5" AutoSize @bind-Text="@inputText" />
+            </FieldBody>
+        </Field>
+
+        <Field>
+            <FieldBody>
+                <Button Color="Color.Primary" Clicked="@ApplyMove">Aplicar movimiento</Button>
+            </FieldBody>
+        </Field>
+
+        <Field>
+            <FieldBody>
+                <Button Color="Color.Success" Clicked="@CopyResult">Copiar resultado</Button>
+            </FieldBody>
+        </Field>
+
+        <ListGroup>
+            <Repeater Items="@outputLines">
+                <ListGroupItem>@context</ListGroupItem>
+            </Repeater>
+        </ListGroup>
+    </Column>
+</Row>
+
+@code {
+    string baseMove = string.Empty;
+    string inputText = string.Empty;
+    string outputText = string.Empty;
+    List<Line> inputLines = new List<Line>();
+    ObservableCollection<string> outputLines = new ObservableCollection<string>();
+    bool usePosAsEndOfMove = false;
+    string titleError = "Error al aplicar movimiento";
+
+    private void Reset() {
+        baseMove = string.Empty;
+        inputText = string.Empty;
+        outputText = string.Empty;
+        inputLines.Clear();
+        outputLines.Clear();
+        usePosAsEndOfMove = false;
+    }
+
+    private Line[] ParseRawLines(string rawText) {
+        var rawLines = rawText.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
+        var lines = new Line[rawLines.Length];
+
+        for (var i = 0; i < rawLines.Length; i++)
+        {
+            lines[i] = new Line(rawLines[i]);
+        }
+
+        return lines;
+    }
+
+    private void ShowExample()
+    {
+        Reset();
+
+        baseMove = @"Dialogue: 0,0:00:00.00,0:00:00.00,Default,,0,0,0,,{\move(0, 0, 10, 10, 0, 20)}Move";
+        inputText = @"Dialogue: 0,0:00:00.00,0:00:00.00,Default,,0,0,0,,{\pos(0, 0)}Pos1" + Environment.NewLine;
+        inputText += @"Dialogue: 0,0:00:00.00,0:00:00.00,Default,,0,0,0,,{\pos(10, 15)}Pos2" + Environment.NewLine;
+        inputText += @"Dialogue: 0,0:00:00.00,0:00:00.00,Default,,0,0,0,,{\pos(20, 30)}Pos3" + Environment.NewLine;
+        inputText += @"Dialogue: 0,0:00:00.00,0:00:00.00,Default,,0,0,0,,{\pos(30, 45)}Pos4" + Environment.NewLine;
+        inputText += @"Dialogue: 0,0:00:00.00,0:00:00.00,Default,,0,0,0,,{\pos(40, 60)}Pos5";
+    }
+
+    private async Task LoadInputFromClipboard()
+    {
+        inputText = await JSService.ClipboardReadTextAsync();
+    }
+
+    private async Task ApplyMove()
+    {
+        if (!AssFilter.TagExists(baseMove, AssTag.Move))
+        {
+            await MessageService.Error(@"El \move ingresado no es válido.", titleError);
+            return;
+        }
+
+        inputLines = ParseRawLines(inputText).ToList();
+
+        if (inputLines.Count == 0) {
+            await MessageService.Error(@"No hay líneas cargadas.", titleError);
+            return;
+        }
+
+        Console.WriteLine($"process lines: {inputLines.Count}");
+        await ProcessLines(baseMove, inputLines, usePosAsEndOfMove);
+    }
+
+    private async Task CopyResult()
+    {
+        await JSService.ClipboardWriteTextAsync(outputText);
+        await MessageService.Info(Notifications.PortapapelesNuevasLineasCopiadas, "Info");
+    }
+
+    private async Task ProcessLines(string baseMove, List<Line> lineas, bool invertMove = false)
+    {
+        Asu.Utils.ChangeCulture();
+        this.outputText = "";
+        this.outputLines.Clear();
+
+        // Obteniendo el movimiento modelo.
+        var tagModelo = new TagMove(baseMove);
+
+        // Obteniendo variaciones en x e y.
+        var varX = tagModelo.X2 - tagModelo.X1;
+        var varY = tagModelo.Y2 - tagModelo.Y1;
+
+        var lineasNuevas = new List<Line>();
+
+        for(var i = 0; i < lineas.Count; i++)
+        {
+            var l = lineas[i];
+            var pos = "";
+            var tagPos = new TagPos();
+            try
+            {
+                if (!AssFilter.TagExists(l.Content, AssTag.Pos))
+                {
+                    var msg = $"No hay \\pos en la línea {i+1}:\n{l}";
+                    await MessageService.Error(msg, titleError);
+                    return;
+                }
+
+                pos = AssFilter.SearchTag(l.Content, AssTag.Pos).Value;
+                tagPos = new TagPos(pos);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                var msg = $"Línea {i+1} es inválida:\n{l}";
+                await MessageService.Error(Notifications.PortapapelesLineasNoValidas, titleError);
+                return;
+            }
+
+            var tagMove2 = new TagMove();
+            if (invertMove)
+            {
+                tagMove2 = new TagMove
+                    {
+                        X1 = tagPos.X + varX,
+                        Y1 = tagPos.Y + varY,
+                        X2 = tagPos.X,
+                        Y2 = tagPos.Y,
+                        T1 = tagModelo.T1,
+                        T2 = tagModelo.T2
+                    };
+            }
+            else
+            {
+                tagMove2 = new TagMove
+                    {
+                        X1 = tagPos.X,
+                        Y1 = tagPos.Y,
+                        X2 = tagPos.X + varX,
+                        Y2 = tagPos.Y + varY,
+                        T1 = tagModelo.T1,
+                        T2 = tagModelo.T2
+                    };
+            }
+
+            l.Content = AssFilter.ReplaceTag(l.Content, AssTag.Pos, tagMove2.ToString());
+            lineasNuevas.Add(l);
+        }
+
+        var output = "";
+
+        foreach (var l in lineasNuevas)
+        {
+            this.outputLines.Add(l.ToString());
+            output += l.ToString() + Environment.NewLine;
+        }
+
+        this.outputText = output;
+    }
+}
