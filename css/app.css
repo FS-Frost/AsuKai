@@ -62,3 +62,12 @@ a, .btn-link {
     .blazor-error-boundary::after {
         content: "An error has occurred."
     }
+
+.loading-app {
+    width: 100%;
+}
+
+    .loading-app img {
+        width: inherit;
+        max-width: 80%;
+    }

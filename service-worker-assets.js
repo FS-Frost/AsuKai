@@ -1,7 +1,7 @@
 ﻿self.assetsManifest = {
   "assets": [
     {
-      "hash": "sha256-kfXT+\/7PwnK7UBTMq8\/AX20+soj7u1sV\/U1lCtnmSZI=",
+      "hash": "sha256-rO4t57RkdKaOI71ameSlB7u0bltlvyl\/gR0vLvhTTi0=",
       "url": "css\/app.css"
     },
     {
@@ -61,11 +61,15 @@
       "url": "icon-512.png"
     },
     {
-      "hash": "sha256-TEVHvxWlJXM5pQEsCkOl7f9ig3rRFHegYA889atD7eg=",
+      "hash": "sha256-hi53HWmMpTJSpndb5wN5MbaWvs4a9XYZdMSA1P2W/XI=",
       "url": "index.html"
     },
     {
-      "hash": "sha256-tpOms9mTRMdmUCt\/ghi+3hQQDWxPq3jJPtufog7wbfE=",
+      "hash": "sha256-Z5iCh2GVwSzOoQuCTRh6PMH+3oP+1nB1tTeFYcGHZeM=",
+      "url": "loading.gif"
+    },
+    {
+      "hash": "sha256-vce7Na3DNy+jzmSq9OWuBWer77eBDlxvajq3DlfcGG8=",
       "url": "manifest.json"
     },
     {
@@ -105,7 +109,7 @@
       "url": "_framework\/icudt.dat"
     },
     {
-      "hash": "sha256-gWBFt+wwDnOLCEW3YbB7Mid8u121Gh3n4mLQAw+xMZM=",
+      "hash": "sha256-BBR8Ousyu9qfUsUpNWjf0GI2MEe4Uljn1zoL508ePXQ=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -113,7 +117,7 @@
       "url": "_framework\/Asu.dll"
     },
     {
-      "hash": "sha256-4gHY847m+lIy91\/NDusqnTN0mrovbxd\/6QKrU27yC34=",
+      "hash": "sha256-2h1HxWVthHvSQGi1fDuh\/soBXOfLxjPK+iW6XEOx0fE=",
       "url": "_framework\/BlazorApp.dll"
     },
     {
@@ -129,7 +133,7 @@
       "url": "_framework\/Blazorise.Icons.FontAwesome.dll"
     },
     {
-      "hash": "sha256-u5xjdapmSGNSgHYezikTxw2xvC8g4F0tA8dbqwAe+Qs=",
+      "hash": "sha256-J3r5rw9Ilbj6+BsEQaLo7Sd8EwWXDquIPlSF4iWjlSc=",
       "url": "_framework\/Microsoft.AspNetCore.Components.dll"
     },
     {
@@ -137,7 +141,7 @@
       "url": "_framework\/Microsoft.AspNetCore.Components.Forms.dll"
     },
     {
-      "hash": "sha256-yJjKcFXl1xZ3kkPpTveQrtV1g1I2NBNVUD+gNq5FZNc=",
+      "hash": "sha256-sr7GA96J9Rm\/XZCdEUZm0AtTpuN0i7QGyIAgbcEKx\/0=",
       "url": "_framework\/Microsoft.AspNetCore.Components.Web.dll"
     },
     {
@@ -265,7 +269,7 @@
       "url": "_framework\/System.ObjectModel.dll"
     },
     {
-      "hash": "sha256-aniD4xXIT5a5X\/ErOM+OIK4jr74E7thwufCblb1aC+8=",
+      "hash": "sha256-rhOkoxjo26hjzZTylcWtHTACqZVz0Yp+8FfYO\/jQUN8=",
       "url": "_framework\/System.Private.CoreLib.dll"
     },
     {
@@ -305,7 +309,7 @@
       "url": "_framework\/System.Threading.dll"
     },
     {
-      "hash": "sha256-gh\/+g8650VAST2rM5hwZcX+w1UDF+2M+PXB3pFTi5NA=",
+      "hash": "sha256-Nolb2oQer2LAnYCkV3Ou5Ad5Bbqv7w4\/yX64GZgXau0=",
       "url": "BlazorApp.styles.css"
     },
     {
@@ -425,5 +429,5 @@
       "url": "_content\/Blazorise\/vendors\/Pickr.js"
     }
   ],
-  "version": "GmI8etHB"
+  "version": "csjSH4gT"
 };

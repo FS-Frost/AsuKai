@@ -1,3 +1,6 @@
+/* /Pages/Index.razor.rz.scp.css */
+body[b-cawgfizwi4] {
+}
 /* /Shared/MainLayout.razor.rz.scp.css */
 .page[b-3ij3p7wwc4] {
     position: relative;
@@ -139,69 +142,6 @@ main[b-3ij3p7wwc4] {
     }
 
     .collapse[b-wk4bcz64v1] {
-        /* Never collapse the sidebar for wide screens */
-        display: block;
-    }
-}
-/* /Shared/NavMenu2.razor.rz.scp.css */
-.navbar-toggler[b-4lbwvgg9wt] {
-    background-color: rgba(255, 255, 255, 0.1);
-}
-
-.top-row[b-4lbwvgg9wt] {
-    height: 3.5rem;
-    background-color: rgba(0,0,0,0.4);
-}
-
-.navbar-brand[b-4lbwvgg9wt] {
-    font-size: 1.1rem;
-}
-
-.oi[b-4lbwvgg9wt] {
-    width: 2rem;
-    font-size: 1.1rem;
-    vertical-align: text-top;
-    top: -2px;
-}
-
-.nav-item[b-4lbwvgg9wt] {
-    font-size: 0.9rem;
-    padding-bottom: 0.5rem;
-}
-
-    .nav-item:first-of-type[b-4lbwvgg9wt] {
-        padding-top: 1rem;
-    }
-
-    .nav-item:last-of-type[b-4lbwvgg9wt] {
-        padding-bottom: 1rem;
-    }
-
-    .nav-item[b-4lbwvgg9wt]  a {
-        color: #d7d7d7;
-        border-radius: 4px;
-        height: 3rem;
-        display: flex;
-        align-items: center;
-        line-height: 3rem;
-    }
-
-.nav-item[b-4lbwvgg9wt]  a.active {
-    background-color: rgba(255,255,255,0.25);
-    color: white;
-}
-
-.nav-item[b-4lbwvgg9wt]  a:hover {
-    background-color: rgba(255,255,255,0.1);
-    color: white;
-}
-
-@media (min-width: 641px) {
-    .navbar-toggler[b-4lbwvgg9wt] {
-        display: none;
-    }
-
-    .collapse[b-4lbwvgg9wt] {
         /* Never collapse the sidebar for wide screens */
         display: block;
     }
