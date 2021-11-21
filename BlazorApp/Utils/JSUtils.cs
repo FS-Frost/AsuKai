@@ -8,8 +8,12 @@ namespace BlazorApp.Utils {
             _js = jsRuntime;
         }
 
-        public void Alert(params object?[]? values) {
-            _js.InvokeVoidAsync("alert", values);
+        public async Task Alert(params object?[]? values) {
+            await _js.InvokeVoidAsync("alert", values);
+        }
+
+        public async Task OpenNewTab(string url) {
+            await _js.InvokeVoidAsync("open", new object[2] { url, "_blank" });
         }
     }
 }

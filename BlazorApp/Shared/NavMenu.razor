@@ -1,43 +1,78 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">BlazorApp</a>
-        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-    </div>
-</div>
+﻿@inject JSUtils Utils
 
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="asu" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Asu
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="oi oi-plus" aria-hidden="true"></span> Counter
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="fetchdata">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
-            </NavLink>
-        </div>
-    </nav>
-</div>
+<Bar Breakpoint="Breakpoint.Desktop"
+     Background="Background.Light"
+     ThemeContrast="ThemeContrast.Light">
+    <BarBrand>
+        Asu
+    </BarBrand>
+    <BarToggler />
+    <BarMenu>
+        <BarStart>
+            <BarItem>
+                <BarLink To="">Inicio</BarLink>
+            </BarItem>
+            <BarItem>
+                <BarLink To="asu">Asu</BarLink>
+            </BarItem>
+            <BarItem>
+                <BarDropdown>
+                    <BarDropdownToggle>Carteles</BarDropdownToggle>
+                    <BarDropdownMenu>
+                        <BarDropdown>
+                            <BarDropdownToggle>Movimiento</BarDropdownToggle>
+                            <BarDropdownMenu>
+                                <BarDropdownItem>Copiar movimiento</BarDropdownItem>
+                                <BarDropdownItem>Secuencia de posiciones</BarDropdownItem>
+                            </BarDropdownMenu>
+                        </BarDropdown>
+                        <BarDropdown>
+                            <BarDropdownToggle>Aplicar tags</BarDropdownToggle>
+                            <BarDropdownMenu>
+                                <BarDropdownItem>Aplicar alpha</BarDropdownItem>
+                                <BarDropdownItem>Aplicar color</BarDropdownItem>
+                            </BarDropdownMenu>
+                        </BarDropdown>
+                    </BarDropdownMenu>
+                </BarDropdown>
+                <BarDropdown>
+                    <BarDropdownToggle>Karaokes</BarDropdownToggle>
+                    <BarDropdownMenu>
+                        <BarDropdownItem>Desplazar tiempos (beta)</BarDropdownItem>
+                        <BarDropdownItem>Dividir karaoke</BarDropdownItem>
+                        <BarDropdownItem>Dividir sílabas</BarDropdownItem>
+                    </BarDropdownMenu>
+                </BarDropdown>
+            </BarItem>
+            <BarItem>
+                <BarDropdown>
+                    <BarDropdownToggle>Dropdown</BarDropdownToggle>
+                    <BarDropdownMenu>
+                        <BarDropdownItem>
+                            <BarLink To="counter">Counter</BarLink>
+                        </BarDropdownItem>
+                        <BarDropdownDivider />
+                        <BarDropdownItem>
+                            <BarLink To="fetchdata">Fetch Data</BarLink>
+                        </BarDropdownItem>
+                    </BarDropdownMenu>
+                </BarDropdown>
+            </BarItem>
+        </BarStart>
+        <BarEnd>
+            <BarItem>
+                <Button Color="Color.Primary"
+                        Clicked="@VisitSyncRajo">
+                    SyncRajo Fansub
+                </Button>
+            </BarItem>
+        </BarEnd>
+    </BarMenu>
+</Bar>
 
 @code {
-    private bool collapseNavMenu = true;
-
-    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-
-    private void ToggleNavMenu() {
-        collapseNavMenu = !collapseNavMenu;
+    private async void VisitSyncRajo() {
+        var url = "http://www.syncrajo.net";
+        await Utils.OpenNewTab(url);
     }
 }
